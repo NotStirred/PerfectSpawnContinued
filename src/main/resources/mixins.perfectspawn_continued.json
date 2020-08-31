@@ -1,0 +1,11 @@
+{
+  "package": "io.github.notstirred.perfectspawn_continued.mixin",
+  "refmap": "mixins.perfectspawn_continued.refmap.json",
+  "target": "@env(DEFAULT)",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinEntityPlayer",
+    "MixinMinecraftServer",
+    "MixinPlayerList"
+  ]
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "perfectspawn_continued",
+    "name": "Perfect Spawn Continued",
+    "description": "",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": [
+      "NotStirred"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
