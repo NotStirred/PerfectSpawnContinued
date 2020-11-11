@@ -1,124 +1,17 @@
 package io.github.notstirred.perfectspawn_continued.config;
 
-import io.github.notstirred.perfectspawn_continued.config.internal.Rule;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.WorldProvider;
+import io.github.notstirred.perfectspawn_continued.PSC;
+import net.minecraftforge.common.config.Config;
 
-public class PSCConfig
-{
-    Rule[] rules = new Rule[0];
+@Config(modid = PSC.MOD_ID, type = Config.Type.INSTANCE)
+public class PSCConfig {
+    @Config.Comment("The initial spawn dimension for new players, and those who don't have beds.")
+    public static int initialSpawnDimension = 0;
 
-    // General Values
-    int initialSpawnDimension = 0;
+    @Config.Comment({"A list of the dimensions that players can respawn in.", "Yes ForgeConfig lists look terrible, I know."})
+    public static int[] dimsPlayersCanSleepIn = { -1, 0 };
 
-    public void setRules(Rule[] rules)
-    {
-        this.rules = rules;
-    }
+    @Config.Comment({"A list of the dimensions that beds explode in.", "Overrides \"dimsPlayersCanSleepIn\"", "Yes ForgeConfig lists look terrible, I know."})
+    public static int[] dimsBedsExplodeIn = { -1, 1 };
 
-    public void setInitialSpawnDimension(int initialSpawnDimension)
-    {
-        this.initialSpawnDimension = initialSpawnDimension;
-    }
-
-    public Boolean canRespawnHere(WorldProvider provider)
-    {
-        Boolean result = null;
-        for (Rule r : rules)
-        {
-            if (r.appliesTo(provider))
-            {
-                Boolean ruleValue = r.getCanRespawnHere();
-
-                if (ruleValue != null)
-                {
-                    result = ruleValue;
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public Boolean canSleepHere(WorldProvider provider)
-    {
-        Boolean result = null;
-        for (Rule r : rules)
-        {
-            if (r.appliesTo(provider))
-            {
-                Boolean ruleValue = r.getForceBed();
-
-                if (ruleValue != null)
-                {
-                    result = ruleValue;
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public Integer getRespawnDimension(WorldProvider provider)
-    {
-        Integer result = null;
-        for (Rule r : rules)
-        {
-            if (r.appliesTo(provider))
-            {
-                Integer ruleValue = r.getRespawnDimension();
-
-                if (ruleValue != null)
-                {
-                    result = ruleValue;
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public BlockPos getSpawnPoint(WorldProvider provider)
-    {
-        BlockPos result = null;
-        for (Rule r : rules)
-        {
-            if (r.appliesTo(provider))
-            {
-                BlockPos ruleValue = r.getSpawnPoint();
-
-                if (ruleValue != null)
-                {
-                    result = ruleValue;
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public int getInitialSpawnDimension()
-    {
-        return initialSpawnDimension;
-    }
-
-    public boolean canUnload(int dimension)
-    {
-        if (dimension == initialSpawnDimension)
-        {
-            return false;
-        }
-
-        for (Rule r : rules)
-        {
-            Integer respawn = r.getRespawnDimension();
-
-            if (respawn != null && respawn == dimension)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }

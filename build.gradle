@@ -22,7 +22,7 @@ apply plugin: 'org.spongepowered.mixin'
 
 group = 'io.github.notstirred'
 version = '1.0-SNAPSHOT'
-archivesBaseName = 'perfectspawn_continued'
+archivesBaseName = modid
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
@@ -49,6 +49,14 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
+            property '--mixin', 'mixins.' + modid + '.json'
+
+            property 'mixin.debug.verbose', 'true'
+            property 'mixin.debug.export', 'true'
+            property 'mixin.checks.interfaces', 'true'
+            property 'fml.coreMods.load', 'io.github.notstirred.perfectspawn_continued.PSCCoreMod' //the core mod class, needed for mixins
+            property 'mixin.env.compatLevel', 'JAVA_8' //needed to use java 8 when using mixins
+
             mods {
                 perfectspawncontinued {
                     source sourceSets.main
@@ -65,6 +73,12 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
+            property '--mixin', 'mixins.' + modid + '.json'
+
+            property 'mixin.debug.verbose', 'true'
+            property 'mixin.debug.export', 'true'
+            property 'mixin.checks.interfaces', 'true'
+
             mods {
                 perfectspawncontinued {
                     source sourceSets.main
@@ -79,6 +93,7 @@ dependencies {
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     implementation 'org.spongepowered:mixin:0.8'
+    annotationProcessor 'org.spongepowered:mixin:0.8:processor'
 
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
 
@@ -107,9 +122,17 @@ mixin {
 
 jar {
     manifest.attributes(
+            "Specification-Title": archivesBaseName,
+            "Specification-Vendor": "",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
             'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker',
-            'MixinConfigs': 'mixins.perfectspawn_continued.json',
+            'MixinConfigs': 'mixins.' + modid + '.json',
             'FMLCorePluginContainsFMLMod': 'true',
+            "ForceLoadAsMod": "true"
     )
 }
 

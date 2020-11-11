@@ -1,6 +1,6 @@
 package io.github.notstirred.perfectspawn_continued.mixin;
 
-import io.github.notstirred.perfectspawn_continued.PSC;
+import io.github.notstirred.perfectspawn_continued.config.PSCConfig;
 import net.minecraft.server.management.PlayerList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.Slice;
 public class MixinPlayerList {
     @ModifyConstant(method = "createPlayerForUser", slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/server/MinecraftServer;isDemo()Z")))
     private int on$getDefaultDimension(int _0) {
-        return PSC.INSTANCE.CONFIG.getInitialSpawnDimension();
+        return PSCConfig.initialSpawnDimension;
     }
 }
